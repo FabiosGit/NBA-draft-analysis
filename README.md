@@ -12,3 +12,5 @@ TODO
 - [ ] Optional: Create toggle button that allows weighing the team analysis by games/minutes played of their players @
 - [ ] Create an aggregated analysis (combine all stats into one) in the team analysis section @
 - [ ] Make plots prettier/better (e.g. color code by position, allow more filtering, whatever comes to mind...) @
+- [ ] Structure/Outline of the document @Fabio
+- [ ] Write explanations @Fabio
