@@ -14,3 +14,4 @@ TODO
 - [ ] Make plots prettier/better (e.g. color code by position, allow more filtering, whatever comes to mind...) @
 - [x] Structure/Outline of the document @Fabio
 - [ ] Write explanations @Fabio
+- [ ] Fix index links bug @Fabio
