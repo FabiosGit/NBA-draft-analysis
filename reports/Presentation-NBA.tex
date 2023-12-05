@@ -1,0 +1,182 @@
+\documentclass{beamer}
+
+\mode<presentation> {
+  \usetheme{default} 
+  \setbeamertemplate{navigation symbols}{} 
+}
+
+\title[NBA Draft Analysis]{NBA Draft Analysis - Which NBA Team Selects the Best Players Relative to the Average Player at their Respective Draft Position?}
+\author{Luis Knufinke, Fabio Nadaia, Ralf Wyss}
+\institute[Your Institute]{University of Zurich}
+\date{\today}
+
+\usepackage[table]{xcolor}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Table of Contents}
+    \begin{itemize}
+        \item Introduction
+        \item Player Analysis
+        \item Team Analysis
+        \item Conclusion
+      \end{itemize}
+\end{frame}
+
+\section{Introduction}
+\begin{frame}{Question}
+  The NBA Draft is an annual event in the National Basketball Association (NBA)...
+  \begin{itemize}
+    \item Teams select eligible players to join their rosters
+    \item It is a pivotal moment for the league's future
+  \end{itemize}
+  \vspace{10pt} 
+  \textbf{Research Question:} Which NBA team selects the best players relative to the average player at their respective draft position?
+\end{frame}
+
+\section{Data}
+\begin{frame}{Data}
+  Information about the draft selections is from Basketball Reference and data from the NBA API...
+  \begin{itemize}
+    \item Period from 1996 until 2023
+    \item We look at different player metrics
+    \item Interactive tools to explore and compare player and team data
+  \end{itemize}
+\end{frame}
+
+
+\section{Player Analysis}
+\begin{frame}{Player Analysis}
+    \frametitle{Player Analysis}
+    
+      \begin{itemize}
+        \item Compare player metric (relative to average selection) and the draft pick
+        \item Example with LeBron James and total points scored
+      \end{itemize}
+    
+      % If your image is in a different folder or has a different name, adjust the path and filename accordingly.
+      \begin{figure}
+        \includegraphics[width=\textwidth]{Plots/Plot1.png}
+        \caption{PTS Difference vs Draft Pick}
+      \end{figure}
+    
+\end{frame}
+
+
+\section{Player Analysis}
+\begin{frame}{Player Analysis}
+    \frametitle{Player Analysis}
+    
+      \begin{itemize}
+        \item Compare player metric (raw) and the draft pick for a given draft pick
+        \item Example with LeBron James and total points scored
+      \end{itemize}
+    
+      % If your image is in a different folder or has a different name, adjust the path and filename accordingly.
+      \begin{figure}
+        \includegraphics[width=\textwidth]{Plots/Plot2.png}
+        \caption{PTS vs Draft Pick}
+      \end{figure}
+    
+\end{frame}
+
+\section{Team Analysis}
+\begin{frame}{Team Analysis}
+    \frametitle{Team Analysis}
+    
+      \begin{itemize}
+        \item Average performance metrics of all players selected by a team in the same draft year
+        \item Example with Cleveland Cavaliers and total points scored
+      \end{itemize}
+    
+      % If your image is in a different folder or has a different name, adjust the path and filename accordingly.
+      \begin{figure}
+        \includegraphics[width=\textwidth]{Plots/Plot8.png}
+        \caption{PTS Difference vs Teams over Time}
+      \end{figure}
+    
+\end{frame}
+
+\section{Team Analysis}
+\begin{frame}{Team Analysis}
+    \frametitle{Team Analysis}
+    
+      \begin{itemize}
+        \item Average differences for the selected statistic are plotted against the average draft position of each team
+        \item Example with total points scored
+      \end{itemize}
+    
+      % If your image is in a different folder or has a different name, adjust the path and filename accordingly.
+      \begin{figure}
+        \includegraphics[width=\textwidth]{Plots/Plot7.png}
+        \caption{PTS Difference vs Average Draft Position}
+      \end{figure}
+    
+\end{frame}
+
+
+
+\section{Team Analysis}
+\begin{frame}{Team Analysis}
+    \frametitle{Team Analysis}
+    
+    Table showing the top 5 teams ranked by a weighted average, reflecting aggregated team performance statistics.
+    
+    \begin{table}
+        \centering
+        \caption{Top 5 Teams by Weighted Average Rank}
+        \vspace{5mm} % Adjust the vertical space as needed
+        \label{table:2}
+        \begin{tabular}{|c|c|c|}
+        \hline
+        \rowcolor{gray!50} Rank & Team & Weighted Average Rank \\ % Shaded header row
+        \hline
+        1 & CLE & 6.00 \\
+        \hline
+        2 & UTA & 8.45 \\
+        \hline
+        3 & DEN & 8.55 \\
+        \hline
+        4 & MIL & 8.55 \\
+        \hline
+        5 & TOR & 9.09 \\
+        \hline
+        \end{tabular}
+    \end{table}
+    
+    \end{frame}
+
+
+
+
+
+
+\section{Conclusions}
+\begin{frame}{Conclusions}
+  The best NBA team at drafting is the Cleveland Cavaliers, based on the standard parameters
+  \begin{itemize}
+    \item Top teams relatively constant if changes weights for aggregation
+    \item High ranking of teams linked to individual player selections
+  \end{itemize}
+\end{frame}
+
+\section{Further Research Ideas}
+\begin{frame}{Further Research Ideas}
+  \begin{itemize}
+    \item Investigate the relationship between team success and draft performance
+    \item Conduct ablation studies
+    \item Break down the analysis on a positional basis
+    \item Extend the time period
+    \item Add and/or change the performance metrics
+  \end{itemize}
+\end{frame}
+
+
+
+\end{document}
+
+

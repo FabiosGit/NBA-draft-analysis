@@ -1,0 +1,298 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\usepackage[table]{xcolor} % For shading cells
+\usepackage{colortbl}
+\usepackage{float}
+
+
+
+\title{NBA Draft Analysis - Which NBA Team Selects the Best Players Relative to the Average Player at their Respective Draft Position?}
+\author{Luis Knufinke \\ Fabio Nadaia \\ Ralf Wyss}
+\date{\today}
+
+
+
+
+
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+
+\newpage
+\tableofcontents
+
+\thispagestyle{empty}
+
+\newpage
+\pagenumbering{arabic} % Turn on page numbering and start from 1
+\setcounter{page}{1} % Start page numbering from 1
+
+\section{Introduction}
+The NBA Draft is an annual event in the National Basketball Association (NBA) where teams select eligible players to join their rosters. It consists of two rounds since 1989, with teams choosing players based on a predetermined order, primarily determined by the previous season's standings. The draft serves as a way for teams to acquire new talent, including young prospects from college or international leagues, and provides an opportunity for emerging basketball stars to realize their dreams of playing in the NBA.
+
+For example, in 2003, the famous basketball player LeBron James was the first overall pick by the Cleveland Cavaliers. His selection was the culmination of immense hype and anticipation, as he was considered a generational talent straight out of high school. The NBA Draft is a pivotal moment for the league's future, as it shapes the composition of teams and can have a significant impact on the sport's landscape.
+
+A team’s choice during the draft can make or break its season, making it crucial to have effective tools for selecting the best players from the available pool. With this analysis, we aim to understand which team selects the best players relative to the average player at their respective draft position. To do so, we will get the historical data of the drafts for the NBA seasons from 1996 until 2023. This project focuses on NBA player and team statistics analysis and visualizations, offering interactive tools to explore and compare player and team data, and ultimately aiding in the assessment of draft choices, individual player achievements, and team success over different seasons. This paper shows selected results from our interactive analysis.
+
+
+\section{Data}
+
+Information about the draft selections was manually exported from the draft section of Basketball Reference. This data also contains advanced statistics for each player, aggregated to their careers. After combining the exported data for all draft years into one file, we ended up with 22 variables for each player drafted between 1996 and 2022. The draft year 2023 was excluded for this analysis because at the time this research was conducted, the 2023-24 NBA season had not started.
+
+The raw data about further player performance metrics is accessed using the NBA API and it contains a variety of advanced statistics of all official NBA players from year 1996 until 2023. The statistics include the player ID, his name, how many years he played, points scored and many more. The NBA API offers 265 variables, but we will use only 13 of them. In the appendix, a reference table shows all our variables and abbreviations.
+
+The player career average data was obtained by combining the statistics from Basketball Reference which was already aggregated to career-level with the weighted average of the season-level statistics for each player.
+
+As a first part of our interactive analysis, there is a slider where you can adjust the range of draft years you want to take into account in the analysis. Drafted players who never played a game in the NBA are perceived as bad draft picks but never accumulated any stats. Since excluding them from the analysis would worsen the relative performance of other players (who did play in the NBA) selected at that respective draft position, the empty stats should be replaced by a "bad stat", as never playing a game in the NBA objectively makes that player a bad selection. For total points, assists and rebounds, 0 is the absolute minimum and therefore suitable as a replacement stat. However, all other stats are unbounded and don't have a definite minimum value. Using the minimum value in our data would be greatly affected by outliers which is why we opted for a percentile that can be dynamically chosen using a slider. We recommend using a percentile between 1\% and 5\%. The stats of the drafted players who did not play in the NBA are replaced with the chosen penalty values. As a next step, the average value for each player statistic is calculated per draft position. To compare the performance of a player to the average player at their draft position, we calculate the difference between the player's statistics to the previously calculated average values. For most statistics, a positive difference signifies that this player performed better than the average selection at their pick. An exception is $DEF\_RATING$, for which lower values are better, meaning that a negative difference is desirable. In this paper, only the standard parameters are considered. These are a time range from 1996-2022 and a penalty percentile of 0.02. 
+
+
+\section{Player Analysis}
+\textbf{Calculate the Ranks for all Players } \\
+We also calculated the ranking of the performance above/below the average player at that draft position for each statistic. Some of the statistics that are normalized per 48 minutes can be affected by players that only played very little but performed well in this limited time (e.g., a player only ever played two minutes at the end of a blowout game but scored four points). To avoid such players being ranked very highly, a minimum amount of games can be set using a slider and all players that do not meet this requirement are excluded from the ranking. Be aware that these players are only excluded from the individual player analysis but not from the team analysis further below. In this paper, the minimum number of games played is chosen to be 82. \\
+\vspace{5mm}
+
+\textbf{Performance of Selected Player} \\
+In our interactive analysis, you can then look at the performance of selected players. In a scatter plot, the difference of a player to the average selection at a given draft pick for a selected performance metric is plotted against the draft picks. Figure 1 shows the example with LeBron James as selected player and the total points scored by a player as metric.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Plots/Plot1.png}
+
+    \caption{The highlighted player is LeBron James}
+    \label{fig:1}
+\end{figure}
+
+
+\textbf{Performance Metric vs Draft Pick} \\
+Similarly to the visualization above, the chosen statistics of individual players are plotted against their draft position. However, instead of showing the differences, this plot uses the raw statistics. The yellow dots represent the average statistic for that draft pick. This is displayed in Figure 2 for the same characteristics as Figure 1.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Plots/Plot2.png}
+
+    \caption{The highlighted player is LeBron James}
+    \label{fig:2}
+\end{figure}
+
+
+\section{Team Analysis by Season}
+In this section, the analysis is aggregated to a team level in order to answer the initial research question, which NBA team is best at drafting. 
+
+We calculate the average performance metrics of all player selected by a team in the same draft year. This allows us to visualize the draft performance of each team over time. The grey dots in the scatter plot below represent the draft performance of a team in the respective season. Using the dropdown widget, a team can be selected and it’s performance is shown in red. Optionally, the individual players that were picked by the selected team can also be visualized (blue dots).
+
+A purple dot means that the blue and red dot are exactly overlapping. In other words, the chosen team only selected one player in the respective draft year, resulting in the players values and team average being equal.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Plots/Plot8.png}
+
+    \caption{The selcted team are the Cleveland Cavaliers}
+    \label{fig:3}
+\end{figure}
+
+\section{Team Analysis}
+In this section, each team's draft performance is aggregated over the entire selected time period. In the scatter plot below, the average differences for the selected statistic are plotted against the average draft position of each team. Be aware that the minimum games restriction does not apply to this section.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Plots/Plot7.png}
+
+    \caption{The selcted team are the Cleveland Cavaliers}
+    \label{fig:7}
+\end{figure}
+
+Table 1 shows the team with the highest difference for each statistic.
+
+
+\begin{table}[H]
+\centering
+\caption{Best Team for each Statistics}
+\label{table:1}
+\vspace{5mm} % Adjust the vertical space as needed
+\begin{tabular}{|c|c|}
+\hline
+\rowcolor{gray!50} Statistic & Best Team \\ % Adjust the color as needed
+\hline
+PTS & SAS \\
+\hline
+TRB & TOR \\
+\hline
+AST & SAS \\
+\hline
+WS & SAS \\
+\hline
+WS/48 & DEN \\
+\hline
+BPM & DEN \\
+\hline
+VORP & SAS \\
+\hline
+PIE & DEN \\
+\hline
+OFF\_RATING & DEN \\
+\hline
+DEF\_RATING & SAS \\
+\hline
+NET\_RATING & DEN \\
+\hline
+\end{tabular}
+\end{table}
+
+
+\section{Aggregated Team Analysis}
+In this section, we attempt to aggregate all statistics by creating a weighted average rank for each team. The weights for each statistic can be set using sliders. In table 2, we display the standard case with equal weights.
+
+\begin{table}[H]
+    \centering
+    \caption{Top 10 Teams by Weighted Average Rank}
+    \vspace{5mm} % Adjust the vertical space as needed
+    \label{table:2}
+    \begin{tabular}{|c|c|c|}
+    \hline
+    \rowcolor{gray!50} Rank & Team & Weighted Average Rank \\ % Shaded header row
+    \hline
+    1 & CLE & 6.00 \\
+    \hline
+    2 & UTA & 8.45 \\
+    \hline
+    3 & DEN & 8.55 \\
+    \hline
+    4 & MIL & 8.55 \\
+    \hline
+    5 & TOR & 9.09 \\
+    \hline
+    6 & PHI & 9.18 \\
+    \hline
+    7 & LAL & 10.00 \\
+    \hline
+    8 & BOS & 10.36 \\
+    \hline
+    9 & SAS & 10.55 \\
+    \hline
+    10 & IND & 11.45 \\
+    \hline
+    \end{tabular}
+    \end{table}
+
+
+\newpage
+
+\section{Conclusions, Limitations, and Further Research Ideas}
+Using the standard parameters (time range: 1996-2022, penalty percentile: 0.02, equal-weighted statistics for aggregation), the best NBA team at drafting are the Cleveland Cavaliers!
+
+Even when changing the weights for the aggregation drastically, the top teams remain relatively constant. A savy basketball fan can quickly discover that the high ranking of some teams can be linked to individual player selections that greatly outperformed their peers at their respective draft positions (e.g., CLE: LeBron James, DEN: Nikola Jokic). We attribute this to the comparatively short time period available for analysis which leads us to our first possible avenue for further research. By finding the used statistics for a longer time period than available through the NBA API or using a different set of statistics that are available for extended time periods, the analysis could be more robust and less sensitive to individual players.
+
+A limitation of many performance metrics we used is that they tend to increase the longer a player's career is. For example, points, rebounds, and assists are strictly increasing over time and a hypothetical mediocre player who has already finished his 10-year career will likely have better statistics than a recently drafted superstar who has only been in the NBA for a couple of seasons but would be perceived as the better draft selection by most people. We thought of several options to address this limitation but eventually decided that each option also introduces new drawbacks. Normalizing all stats to a per-game basis might disadvantage players who had long careers and would be negatively affected by lower statistics in their mid-/late-thirties (e.g., Dirk Nowitzki). Alternatively, one could decide to only use a subset of the available statistics in order to exclude strictly increasing metrics such as the ones mentioned above. However, this increases the reliance on individual advanced statistics. Since there is no one true measure of player performance, the combination of multiple statistics is a crucial part of the analysis which would suffer if certain metrics were to be excluded. Future researchers could attempt to find other solutions to this issue.
+
+\vspace{5mm}
+Further research ideas:
+
+\begin{itemize}
+    \item Investigate relationship between team success and draft performance.
+    \item Conduct ablation studies to investigate the impact of different weighting and/or fully excluding certain metrics.
+    \item Break down the analysis on a positional basis (e.g., "Which team is best at drafting guards?").
+    \item Extend the time period.
+    \item Add and/or change the performance metrics.
+\end{itemize}
+
+
+\newpage
+
+\appendix
+\section{Appendix}
+
+
+
+\begin{table}[htbp]
+    \centering
+    \caption{Abbreviation Reference Table (1/2)}
+    \label{table:3}
+    \vspace{5mm}
+    \begin{tabular}{|l|p{10cm}|}
+    \hline
+    \rowcolor{gray!25} \textbf{Abbreviation} & \textbf{Meaning} \\
+    \hline
+    Player ID & The player number for reference \\
+    \hline
+    Season & The season in which the player was drafted \\
+    \hline
+    Pk & The player's draft pick number \\
+    \hline
+    Tm & The team the player is currently playing for or played for during that season \\
+    \hline
+    Player & The name of the player \\
+    \hline
+    College & The college or university the player attended before entering the NBA \\
+    \hline
+    Yrs & The number of years the player has been in the NBA \\
+    \hline
+    G & Games played by the player during the specified season \\
+    \hline
+    MP & Minutes played by the player during the specified season \\
+    \hline
+
+    \hline
+    \end{tabular}
+    \end{table}
+    
+
+    \begin{table}[htbp]
+        \centering
+        \caption{Abbreviation Reference Table (2/2)}
+        \label{table:4}
+        \vspace{5mm}
+        \begin{tabular}{|l|p{10cm}|}
+        \hline
+        \rowcolor{gray!25} \textbf{Abbreviation} & \textbf{Meaning} \\
+        \hline
+
+        PTS & Total points scored by the player during the specified season \\
+        \hline
+        TRB & Total rebounds grabbed by the player during the specified season \\
+        \hline
+        AST & Total assists made by the player during the specified season \\
+        \hline
+        FG\% & Field Goal Percentage, which represents the player's accuracy in making field goals (2-point shots) \\
+        \hline
+        3P\% & Three-Point Percentage, which represents the player's accuracy in making three-point shots \\
+        \hline
+        FT\% & Free Throw Percentage, which represents the player's accuracy in making free throws \\
+        \hline
+        MP.1 & Minutes per game played by the player during the specified season \\
+        \hline
+        PTS.1 & Points per game scored by the player during the specified season \\
+        \hline
+        TRB.1 & Rebounds per game grabbed by the player during the specified season \\
+        \hline
+        AST.1 & Assists per game made by the player during the specified season \\
+        \hline
+        WS & Win Shares, a statistic that estimates the number of wins a player contributes to their team \\
+        \hline
+        WS/48 & Win Shares per 48 minutes, a rate statistic measuring a player's efficiency in contributing to wins \\
+        \hline
+        BPM & Box Plus-Minus, a statistic that estimates a player's overall impact on the game per 100 possessions \\
+        \hline
+        VORP & Value Over Replacement Player, a statistic that quantifies a player's value compared to a hypothetical replacement-level player \\
+        \hline
+        PIE & Player Impact Estimate, a statistic that estimates a player's overall impact on the game, expressed as a percentage \\
+        \hline
+        NET\_RATING & Net Rating, the difference between a team's offensive and defensive ratings when a player is on the court \\
+        \hline
+        DEF\_RATING & Defensive Rating, a statistic that estimates the number of points a player allows per 100 possessions while on the court \\
+        \hline
+        OFF\_RATING & Offensive Rating, a statistic that estimates the number of points a player's team scores per 100 possessions while on the court \\
+        \hline
+        \end{tabular}
+        \end{table}
+
+
+
+\end{document}
